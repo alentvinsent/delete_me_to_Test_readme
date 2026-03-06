@@ -40,9 +40,9 @@ Before running the script, make sure you have:
 
 ---
 
-## What this script does (step-by-step)
+## What script does in each stage.
 
-### Step 1: Environment Setup
+### Stage 1: Environment Setup
 
 The script checks for a `.env` file:
 - If missing, it copies `.env.example` to `.env` (make sure you have updated your `.env` file)
@@ -50,32 +50,32 @@ The script checks for a `.env` file:
 
 > **Note:** Localhost URLs will work in simulators because the web app runs on the same machine. However, for real devices, you need to change the URL to the actual server (like `https://app.spacereimagined.io/`) so the app can access the official Space website. 
 
-### Step 2: Dependency Installation
+### Stage 2: Dependency Installation
 
 Runs `npm install` to download all required packages into the `node_modules` folder.
 
-### Step 3: Production Build
+### Stage 3: Production Build
 
 Runs `npm run production` to create an optimized build in the `dist/` folder.
 
-### Step 4: Capacitor Initialization
+### Stage 4: Capacitor Initialization
 
 If Capacitor isn't initialized yet, it sets up the project with:
 - App name: "Space App"
 - App ID: `io.spacereimagined.app`
 - Web directory: `dist`
 
-### Step 5: Platform Setup
+### Stage 5: Platform Setup
 
 Checks and adds iOS and Android platforms:
 - Creates `ios/` folder with Xcode project
 - Creates `android/` folder with Android Studio project
 
-### Step 6: Sync
+### Stage 6: Sync
 
 Copies your web build to both native projects and updates plugins.
 
-### Step 7: Launch
+### Stage 7: Launch
 
 Prompts you to choose:
 - `1` - Launch on iOS
