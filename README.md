@@ -84,14 +84,27 @@ We use [Homebrew](https://brew.sh/) to manage system tools and **Ruby** to run F
 
 ---
 
-## 🚢 Deployment
+## 🚢 Deployment (Fastlane)
 
-We use **Fastlane** to automate our deployment process to TestFlight.
+We use **[Fastlane](https://fastlane.tools/)** to automate our delivery process. It handles everything from code signing to uploading builds to TestFlight.
 
-To deploy a build to the development environment:
+### 🚀 Common Deployment Lanes
+To deploy a build, use the following commands:
 ```bash
+# Deploy to Development
 bundle exec fastlane dev
+
+# Deploy to Beta
+bundle exec fastlane beta
+
+# Deploy to Production
+bundle exec fastlane prod
 ```
+
+### 📖 Internal Fastlane Documentation
+For more detailed information on our automation setup, please refer to:
+- **[Fastlane README](file:///Users/caw/Desktop/SPACE/space-ios/fastlane/README.md)**: Auto-generated list of available lanes.
+- **[Developer Guide](file:///Users/caw/Desktop/SPACE/space-ios/fastlane/DEVELOPER_GUIDE.md)**: A deep dive into CI/CD, local runners, and troubleshooting Fastlane-specific errors.
 
 ---
 
@@ -132,13 +145,13 @@ If the app fails to build or run on your device, try these common solutions:
 ### 🧹 Clean Build & Restart
 - **Fix**: If Xcode is behaving unexpectedly (indexing forever, strange build errors):
   1. Clean the build folder (**Shift + Cmd + K**).
-  2. Delete **Derived Data** (Xcode Settings > Locations).
+  2. Delete **Derived Data** (File > Workspace Settings > Derived Data > Delete or Xcode > Settings > Locations > Derived Data > Delete ).
   3. **Restart Xcode**: Sometimes a simple quit and reopen is the "magic fix" after cleaning.
   4. **Wait**: Always wait for Xcode to finish **Indexing** and **Processing Files** (check the top status bar) before attempting to build.
 
 ---
 
-## 🛠 Git & Project File Hygiene
+## 🛠 Git pushing rules with .xcodeproj file
 
 ### ⚠️ The Project File (`.xcodeproj`)
 The `Space.xcodeproj` file is the heart of the project. It tracks every file, folder, and configuration.
