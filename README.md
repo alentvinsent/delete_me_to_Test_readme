@@ -18,33 +18,56 @@
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started (First-Time Setup)
 
-### Prerequisites
+This guide is designed for developers setting up the project on a **fresh Macbook**.
 
-- **macOS** with the latest version of **Xcode** installed.
-- **Ruby** (v2.7+) for managing development dependencies via Bundler.
-- **Optional**: [Homebrew](https://brew.sh/) for managing system packages.
+### 1. Install Xcode
+1. Download **Xcode** from the Mac App Store.
+2. Once installed, open Xcode and install the **Command Line Tools** if prompted.
+3. Alternatively, run in Terminal:
+   ```bash
+   xcode-select --install
+   ```
 
-### Installation
+### 2. Install Homebrew & Dependencies
+We use [Homebrew](https://brew.sh/) to manage system tools and **Ruby** to run Fastlane.
 
+1. **Install Homebrew**:
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+2. **Install Ruby & Bundler**:
+   MacOS comes with Ruby, but we recommend using a version manager like `rbenv` to avoid permission issues:
+   ```bash
+   brew install rbenv
+   rbenv init # Follow the instructions to add to your shell profile (.zshrc)
+   brew install ruby-build
+   rbenv install 3.2.2 # Install a modern Ruby
+   rbenv global 3.2.2
+   gem install bundler
+   ```
+
+### 3. Clone & Initialize Project
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/spacereimagined/space-ios.git
    cd space-ios
    ```
-
-2. **Install Ruby dependencies**:
+2. **Install project dependencies**:
    ```bash
    bundle install
    ```
 
-3. **Open the project**:
-   - Locate and open **`Space.xcodeproj`** in Xcode.
+### 4. Open & Build
+1. Open **`Space.xcodeproj`** in Xcode.
+2. **Wait for SPM**: Xcode will automatically begin resolving **Swift Package Manager** dependencies (visible in the top status bar). Wait for this to finish.
+3. Select the **Space(Dev)** scheme and an **iPhone Simulator**.
+4. Press **Cmd + R** to build and run.
 
 ---
 
-## 📱 Running the App
+## 📱 Build & Environments
 
 1. Open **Space.xcodeproj** in Xcode.
 2. Select the **Space(Dev)** scheme from the top toolbar for local development.
@@ -81,6 +104,34 @@ bundle exec fastlane dev
   - `Constants.swift`: Global configuration and environment constants.
 - `Space.xcodeproj`: Xcode project configuration.
 - `fastlane/`: Deployment automation scripts.
+
+---
+
+## 🛠 Troubleshooting
+
+If the app fails to build or run on your device, try these common solutions:
+
+### 🔑 Code Signing & Certificates
+- **Error**: "Development cannot be started..." or "Provisioning profile mismatch".
+- **Fix**: We use **Fastlane Match**. Ensure you have access to the certificates repo in github and the `MATCH_PASSWORD`. If certs are broken, you can reset them with:
+  ```bash
+  bundle exec fastlane match nuke
+  ```
+
+### 📱 Running on Physical Device
+- **Error**: "Untrusted Developer".
+- **Fix**: On your iPhone, go to **Settings > General > VPN & Device Management**, find your developer certificate, and tap **Trust**.
+
+### 💎 Dependency Issues
+- **Error**: Fastlane command not found or version mismatch.
+- **Fix**: Always prefix commands with `bundle exec`. If issues persist, try:
+  ```bash
+  bundle install
+  bundle update fastlane
+  ```
+
+### 🧹 Clean Build
+- **Fix**: If Xcode is behaving unexpectedly, try cleaning the build folder (**Shift + Cmd + K**) or deleting the **Derived Data** folder.
 
 ---
 
