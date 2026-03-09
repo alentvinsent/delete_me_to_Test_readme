@@ -122,16 +122,31 @@ If the app fails to build or run on your device, try these common solutions:
 - **Error**: "Untrusted Developer".
 - **Fix**: On your iPhone, go to **Settings > General > VPN & Device Management**, find your developer certificate, and tap **Trust**.
 
-### 💎 Dependency Issues
-- **Error**: Fastlane command not found or version mismatch.
-- **Fix**: Always prefix commands with `bundle exec`. If issues persist, try:
-  ```bash
-  bundle install
-  bundle update fastlane
-  ```
+### 💎 Dependency & Package Issues
+- **Error**: Package resolution fails or hangs.
+- **Fix**: 
+  1. Open **File > Packages > Resolve Package Versions**.
+  2. If it still fails, **Force Quit Xcode** and reopen it. This often triggers a fresh resolution that solves persistent issues.
+  3. Prefix commands with `bundle exec` to ensure the project-specific Fastlane version is used.
+  
+### 🧹 Clean Build & Restart
+- **Fix**: If Xcode is behaving unexpectedly (indexing forever, strange build errors):
+  1. Clean the build folder (**Shift + Cmd + K**).
+  2. Delete **Derived Data** (Xcode Settings > Locations).
+  3. **Restart Xcode**: Sometimes a simple quit and reopen is the "magic fix" after cleaning.
+  4. **Wait**: Always wait for Xcode to finish **Indexing** and **Processing Files** (check the top status bar) before attempting to build.
 
-### 🧹 Clean Build
-- **Fix**: If Xcode is behaving unexpectedly, try cleaning the build folder (**Shift + Cmd + K**) or deleting the **Derived Data** folder.
+---
+
+## 🛠 Git & Project File Hygiene
+
+### ⚠️ The Project File (`.xcodeproj`)
+The `Space.xcodeproj` file is the heart of the project. It tracks every file, folder, and configuration.
+
+**Crucial Best Practice**:
+- When you create or add a new file (e.g., a `.swift` file), Xcode automatically updates the `.xcodeproj` file to include a reference to it.
+- **You MUST push the `.xcodeproj` changes along with your new files.**
+- **If you forget**: Other developers will pull your code but their Xcode won't "see" your new files (they will appear as missing references or not show up at all), causing the app to fail to compile.
 
 ---
 
